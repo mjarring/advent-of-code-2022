@@ -31,3 +31,8 @@
 *.out
 *.app
 
+# All extensionless files
+*
+!/**/
+!*.*
+
