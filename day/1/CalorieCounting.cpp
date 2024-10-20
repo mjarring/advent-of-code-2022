@@ -1,11 +1,12 @@
 #include <fstream>
 #include <iostream>
+#include <set>
 #include <string>
 
 using namespace std;
 
 int main() {
-  int mostCalories = 0;
+  set<int, greater<int>> elfCalories;
   int currentCalories = 0;
   ifstream inputFile("input");
   if (inputFile.is_open()) {
@@ -13,10 +14,8 @@ int main() {
     while (getline(inputFile, line)) {
       if (line.empty()) {
         // We have reached the end of this elf's calorie count
-        if (currentCalories > mostCalories) {
-          // This elf is carrying the most calories
-          mostCalories = currentCalories;
-        }
+        // Store the caloreis for this elf in the set
+        elfCalories.insert(currentCalories);
         // Reset the calorie count for the current elf
         currentCalories = 0;
       } else {
@@ -30,6 +29,13 @@ int main() {
     cout << "File not found!" << endl;
     return 1;
   }
-  cout << "Most Calories: " << mostCalories << endl;
+  set<int>::iterator itr = elfCalories.begin();
+  int most = *itr;
+  itr++;
+  int secondMost = *itr;
+  itr++;
+  int thirdMost = *itr;
+  int total = most + secondMost + thirdMost;
+  cout << "Most Calories: " << total << endl;
   return 0;
 }
