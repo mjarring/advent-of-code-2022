@@ -23,8 +23,9 @@ def build(bld):
     )
     bld.program(
         features="cxx cxxprogram",
-        source="src/main.cpp",
-        target="calories",
+        source=["src/Code/Main.cpp", "src/Code/CalorieParser.cpp"],
+        target="advent",
+        includes=["src/Include/"],
         cxxflags=CXXFLAGS,
         use=["doctest"],
     )
