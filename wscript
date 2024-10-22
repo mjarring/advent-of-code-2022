@@ -7,10 +7,12 @@ CXXFLAGS = ["-Wall", "-Werror", "-std=c++17"]
 
 def options(opt):
     opt.load("clangxx")
+    opt.load("clang_compilation_database", tooldir="waf-tools/")
 
 
 def configure(conf):
     conf.load("clangxx")
+    conf.load("clang_compilation_database")
     conf.check(features="cxx cxxprogram", msg="Check for c++ features")
     conf.env.CXXFLAGS = CXXFLAGS
 
