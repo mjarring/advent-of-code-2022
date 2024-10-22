@@ -23,7 +23,7 @@ def build(bld):
     )
     bld.program(
         features="cxx cxxprogram",
-        source="day/1/main.cpp",
+        source="src/main.cpp",
         target="calories",
         cxxflags=CXXFLAGS,
         use=["doctest"],
