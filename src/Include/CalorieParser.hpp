@@ -1,10 +1,12 @@
-#include <fstream>
 #include <functional>
 #include <set>
-
-using namespace std;
+#include <string>
 
 class CalorieParser {
 public:
-  static set<int, greater<int>> parseCalories(ifstream &aFile);
+  CalorieParser(const std::string &aInput);
+  void solve();
+
+private:
+  std::set<int, std::greater<int>> mElfCalories;
 };

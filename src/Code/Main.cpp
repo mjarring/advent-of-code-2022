@@ -1,36 +1,36 @@
 #include "CalorieParser.hpp"
 #include <fstream>
 #include <iostream>
-#include <set>
+#include <sstream>
 #include <string>
 
 using namespace std;
 
+static const std::string CALORIES = "calories";
+
 int main(int argc, char **argv) {
   // Validate arguments
-  if (argc != 2) {
-    cout << "Usage: ./calories <path/to/input>" << endl;
+  if (argc != 3) {
+    cout << "Usage: ./advent function input" << endl;
     return 1;
   }
 
   // Open the file
-  const std::string filePath = argv[1];
+  const std::string filePath = argv[2];
   ifstream inputFile(filePath);
   if (!inputFile.is_open()) {
     cout << "Cannot open file " << filePath << endl;
     return 1;
   }
 
-  // Read file into set
-  set<int, greater<int>> elfCalories = CalorieParser::parseCalories(inputFile);
-  set<int>::iterator itr = elfCalories.begin();
-  int most = *itr;
-  cout << "Elf with the most calories has " << most << endl;
-  itr++;
-  int secondMost = *itr;
-  itr++;
-  int thirdMost = *itr;
-  int topThreeTotal = most + secondMost + thirdMost;
-  cout << "Top three Elves have " << topThreeTotal << endl;
+  // Determine the function
+  const std::string function = argv[1];
+  if (CALORIES == function) {
+    std::stringstream buffer;
+    buffer << inputFile.rdbuf();
+    CalorieParser calorieParser(buffer.str());
+    calorieParser.solve();
+  }
+
   return 0;
 }

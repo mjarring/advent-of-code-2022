@@ -1,16 +1,17 @@
 #include "CalorieParser.hpp"
-#include <fstream>
 #include <functional>
+#include <iostream>
 #include <set>
+#include <sstream>
 #include <string>
 
-using namespace std;
-
-set<int, greater<int>> CalorieParser::parseCalories(ifstream &aFile) {
-  set<int, greater<int>> elfCalories;
+static std::set<int, std::greater<int>>
+readCalories(const std::string &aBuffer) {
+  std::set<int, std::greater<int>> elfCalories;
   int currentCalories = 0;
-  string line;
-  while (getline(aFile, line)) {
+  std::stringstream stream(aBuffer);
+  std::string line;
+  while (std::getline(stream, line)) {
     if (line.empty()) {
       // We have reached the end of this elf's calorie count
       // Store the caloreis for this elf in the set
@@ -25,4 +26,20 @@ set<int, greater<int>> CalorieParser::parseCalories(ifstream &aFile) {
     }
   }
   return elfCalories;
+}
+
+CalorieParser::CalorieParser(const std::string &aInput) {
+  mElfCalories = readCalories(aInput);
+}
+
+void CalorieParser::solve() {
+  std::set<int>::iterator itr = mElfCalories.begin();
+  int most = *itr;
+  std::cout << "Elf with the most calories has " << most << std::endl;
+  itr++;
+  int secondMost = *itr;
+  itr++;
+  int thirdMost = *itr;
+  int topThreeTotal = most + secondMost + thirdMost;
+  std::cout << "Top three Elves have " << topThreeTotal << std::endl;
 }
