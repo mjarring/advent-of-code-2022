@@ -7,7 +7,7 @@ CalorieParser::CalorieParser(const std::string &aInput) {
   int currentCalories = 0;
   std::stringstream stream(aInput);
   std::string line;
-  while (std::getline(stream, line)) {
+  while (std::getline(stream, line) || currentCalories > 0) {
     if (line.empty()) {
       // We have reached the end of this elf's calorie count
       // Store the caloreis for this elf in the set
@@ -21,8 +21,6 @@ CalorieParser::CalorieParser(const std::string &aInput) {
       currentCalories += number;
     }
   }
-  // Need to add the last elf to the list
-  mElfCalories.insert(currentCalories);
 }
 
 int CalorieParser::mostCalories() {

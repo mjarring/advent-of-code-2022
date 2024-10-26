@@ -2,7 +2,7 @@
 
 top = "."
 out = "build"
-CXXFLAGS = ["-Wall", "-Werror", "-std=c++17"]
+CXXFLAGS = ["-Wall", "-Werror", "-std=c++17", "-g", "-O0"]
 
 
 def options(opt):
