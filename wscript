@@ -23,15 +23,33 @@ def build(bld):
     )
     bld.program(
         features="cxx cxxprogram",
-        source=["src/Code/Main.cpp", "src/Code/CalorieParser.cpp"],
+        source=[
+            "src/Code/Main.cpp",
+            "src/Code/CalorieParser.cpp",
+            "src/Code/RockPaperScissors.cpp",
+        ],
         target="advent",
         includes=["src/Include/"],
         cxxflags=CXXFLAGS,
     )
     bld.program(
         features="cxx cxxprogram",
-        source=["src/Code/CalorieParser.cpp", "src/Code/CalorieParserTest.cpp"],
-        target="adventTest",
+        source=[
+            "src/Code/CalorieParser.cpp",
+            "src/Code/CalorieParserTest.cpp",
+        ],
+        target="calorieTest",
+        includes=["src/Include/", "doctest/doctest/"],
+        cxxflags=CXXFLAGS,
+        use=["doctest"],
+    )
+    bld.program(
+        features="cxx cxxprogram",
+        source=[
+            "src/Code/RockPaperScissors.cpp",
+            "src/Code/RockPaperScissorsTest.cpp",
+        ],
+        target="rockPaperScissorsTest",
         includes=["src/Include/", "doctest/doctest/"],
         cxxflags=CXXFLAGS,
         use=["doctest"],
