@@ -4,22 +4,20 @@
 #include <sstream>
 #include <string>
 
-using namespace std;
-
 static const std::string CALORIES = "calories";
 
 int main(int argc, char **argv) {
   // Validate arguments
   if (argc != 3) {
-    cout << "Usage: ./advent function input" << endl;
+    std::cout << "Usage: ./advent function input" << std::endl;
     return 1;
   }
 
   // Open the file
   const std::string filePath = argv[2];
-  ifstream inputFile(filePath);
+  std::ifstream inputFile(filePath);
   if (!inputFile.is_open()) {
-    cout << "Cannot open file " << filePath << endl;
+    std::cout << "Cannot open file " << filePath << std::endl;
     return 1;
   }
 
@@ -29,7 +27,10 @@ int main(int argc, char **argv) {
     std::stringstream buffer;
     buffer << inputFile.rdbuf();
     CalorieParser calorieParser(buffer.str());
-    calorieParser.solve();
+    std::cout << "The elf with the most calories has "
+              << calorieParser.mostCalories() << " calories" << std::endl;
+    std::cout << "The top three elves total " << calorieParser.topThreeTotal()
+              << " calories" << std::endl;
   }
 
   return 0;

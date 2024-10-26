@@ -5,7 +5,8 @@
 class CalorieParser {
 public:
   CalorieParser(const std::string &aInput);
-  void solve();
+  int mostCalories();
+  int topThreeTotal();
 
 private:
   std::set<int, std::greater<int>> mElfCalories;
