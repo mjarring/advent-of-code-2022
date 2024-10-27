@@ -63,3 +63,24 @@ def build(bld):
         cxxflags=CXXFLAGS,
         use=["doctest"],
     )
+    bld.program(
+        features="cxx cxxprogram",
+        source=[
+            "src/Code/DayThree.cpp",
+            "src/Code/RucksackReorganizer.cpp",
+        ],
+        target="rucksack",
+        includes=["src/Include/"],
+        cxxflags=CXXFLAGS,
+    )
+    bld.program(
+        features="cxx cxxprogram",
+        source=[
+            "src/Code/RucksackReorganizer.cpp",
+            "src/Code/RucksackReorganizerTest.cpp",
+        ],
+        target="rucksackTest",
+        includes=["src/Include/", "doctest/doctest/"],
+        cxxflags=CXXFLAGS,
+        use=["doctest"],
+    )
