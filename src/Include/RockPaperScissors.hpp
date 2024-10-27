@@ -2,9 +2,9 @@
 
 class RockPaperScissors {
 public:
-  RockPaperScissors(const std::string &aInput);
-  int getTotalScore();
+  RockPaperScissors(const std::string &aFilePath);
+  unsigned int getTotalScore();
 
 private:
-  int mTotalScore;
+  unsigned int mTotalScore;
 };
