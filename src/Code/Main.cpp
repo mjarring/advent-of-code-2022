@@ -37,7 +37,8 @@ int main(int argc, char **argv) {
               << " calories" << std::endl;
   } else if (ROCK_PAPER_SCISSORS == function) {
     RockPaperScissors rockPaperScissors(buffer.str());
-    std::cout << "Total score " << rockPaperScissors.totalScore() << std::endl;
+    std::cout << "Total score " << rockPaperScissors.getTotalScore()
+              << std::endl;
   } else {
     std::cout << "Unknown function" << std::endl;
     return 1;

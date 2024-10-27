@@ -6,5 +6,5 @@ const std::string input = "A Y\nB X\nC Z\n";
 
 TEST_CASE("Test Total Score") {
   RockPaperScissors rockPaperScissors(input);
-  CHECK(rockPaperScissors.totalScore() == 15);
+  CHECK(rockPaperScissors.getTotalScore() == 15);
 }

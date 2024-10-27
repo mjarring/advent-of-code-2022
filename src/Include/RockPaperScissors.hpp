@@ -2,19 +2,9 @@
 
 class RockPaperScissors {
 public:
-  enum GameToken {
-    PlayerRock,
-    PlayerPaper,
-    PlayerScissors,
-    OpponentRock,
-    OpponentPaper,
-    OpponentScissors
-  };
-
   RockPaperScissors(const std::string &aInput);
-  int totalScore();
+  int getTotalScore();
 
 private:
-  int scoreRound(const GameToken &aOpponentToken,
-                 const GameToken &aPlayerToken);
+  int mTotalScore;
 };
