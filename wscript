@@ -24,11 +24,10 @@ def build(bld):
     bld.program(
         features="cxx cxxprogram",
         source=[
-            "src/Code/Main.cpp",
+            "src/Code/DayOne.cpp",
             "src/Code/CalorieParser.cpp",
-            "src/Code/RockPaperScissors.cpp",
         ],
-        target="advent",
+        target="calorieParser",
         includes=["src/Include/"],
         cxxflags=CXXFLAGS,
     )
@@ -42,6 +41,16 @@ def build(bld):
         includes=["src/Include/", "doctest/doctest/"],
         cxxflags=CXXFLAGS,
         use=["doctest"],
+    )
+    bld.program(
+        features="cxx cxxprogram",
+        source=[
+            "src/Code/DayTwo.cpp",
+            "src/Code/RockPaperScissors.cpp",
+        ],
+        target="rockPaperScissors",
+        includes=["src/Include/"],
+        cxxflags=CXXFLAGS,
     )
     bld.program(
         features="cxx cxxprogram",
