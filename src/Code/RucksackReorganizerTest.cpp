@@ -9,3 +9,8 @@ TEST_CASE("Test Total Priority") {
   RucksackReorganizer reorganizer(testFilePath);
   CHECK(157 == reorganizer.getTotalPriority());
 }
+
+TEST_CASE("Test Badge Priority") {
+  RucksackReorganizer reorganizer(testFilePath);
+  CHECK(70 == reorganizer.getBadgePriority());
+}

@@ -47,3 +47,5 @@ int RucksackReorganizer::getTotalPriority() {
   }
   return totalPriority;
 }
+
+int RucksackReorganizer::getBadgePriority() { return 1; }
