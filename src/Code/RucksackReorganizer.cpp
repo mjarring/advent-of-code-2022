@@ -35,15 +35,14 @@ int calculatePriority(const std::string &aRucksack) {
   return getItemPriority(incorrectItem);
 }
 
-int calculateBadgePriority(const std::vector<std::string> &aGroup) {
-  std::vector<std::string> group = aGroup;
-  size_t badgePos = group[0].find_first_of(group[1]);
-  char badge = group[0].at(badgePos);
-  while (group[2].find_first_of(badge) == std::string::npos) {
+int calculateBadgePriority(std::vector<std::string> &aGroup) {
+  size_t badgePos = aGroup[0].find_first_of(aGroup[1]);
+  char badge = aGroup[0].at(badgePos);
+  while (aGroup[2].find_first_of(badge) == std::string::npos) {
     // Remove badge from group 0 and search group 0 again
-    group[0].erase(badgePos, 1);
-    badgePos = group[0].find_first_of(group[1]);
-    badge = group[0].at(badgePos);
+    aGroup[0].erase(badgePos, 1);
+    badgePos = aGroup[0].find_first_of(aGroup[1]);
+    badge = aGroup[0].at(badgePos);
   }
   return getItemPriority(badge);
 }
