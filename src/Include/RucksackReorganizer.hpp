@@ -6,5 +6,5 @@ public:
   int getTotalPriority();
 
 private:
-  int mTotalPriority;
+  std::string mInputFilePath;
 };

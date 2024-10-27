@@ -35,13 +35,15 @@ int calculatePriority(const std::string &aRucksack) {
 }
 
 RucksackReorganizer::RucksackReorganizer(const std::string &aFilePath)
-    : mTotalPriority(0) {
-  std::string line = "";
-  std::ifstream inputFile(aFilePath);
-  assert(inputFile.is_open());
-  while (std::getline(inputFile, line)) {
-    mTotalPriority += calculatePriority(line);
-  }
-}
+    : mInputFilePath(aFilePath) {}
 
-int RucksackReorganizer::getTotalPriority() { return mTotalPriority; }
+int RucksackReorganizer::getTotalPriority() {
+  std::string line = "";
+  std::ifstream inputFile(mInputFilePath);
+  assert(inputFile.is_open());
+  int totalPriority = 0;
+  while (std::getline(inputFile, line)) {
+    totalPriority += calculatePriority(line);
+  }
+  return totalPriority;
+}
