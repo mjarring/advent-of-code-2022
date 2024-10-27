@@ -7,4 +7,6 @@ int main() {
   RucksackReorganizer reorganizer(filePath);
   std::cout << "Sum of priorities: " << reorganizer.getTotalPriority()
             << std::endl;
+  std::cout << "Sum of badge priorities: " << reorganizer.getBadgePriority()
+            << std::endl;
 }
