@@ -84,3 +84,24 @@ def build(bld):
         cxxflags=CXXFLAGS,
         use=["doctest"],
     )
+    bld.program(
+        features="cxx cxxprogram",
+        source=[
+            "src/Code/DayFour.cpp",
+            "src/Code/CampCleanup.cpp",
+        ],
+        target="campCleanup",
+        includes=["src/Include/"],
+        cxxflags=CXXFLAGS,
+    )
+    bld.program(
+        features="cxx cxxprogram",
+        source=[
+            "src/Code/CampCleanup.cpp",
+            "src/Code/CampCleanupTest.cpp",
+        ],
+        target="campCleanupTest",
+        includes=["src/Include/", "doctest/doctest/"],
+        cxxflags=CXXFLAGS,
+        use=["doctest"],
+    )
