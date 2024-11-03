@@ -5,7 +5,12 @@
 
 const std::string testFilePath = "input/day/4/test.txt";
 
-TEST_CASE("Test Overlapping Assignments") {
+TEST_CASE("Test Contained Assignments") {
   CampCleanup cleanup(testFilePath);
   CHECK(2 == cleanup.getContainedAssignments());
+}
+
+TEST_CASE("Test Overlapping Assignments") {
+  CampCleanup cleanup(testFilePath);
+  CHECK(4 == cleanup.getOverlappingRanges());
 }

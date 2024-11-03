@@ -89,6 +89,7 @@ def build(bld):
         source=[
             "src/Code/DayFour.cpp",
             "src/Code/CampCleanup.cpp",
+            "src/Code/Assignment.cpp",
         ],
         target="campCleanup",
         includes=["src/Include/"],
@@ -98,6 +99,7 @@ def build(bld):
         features="cxx cxxprogram",
         source=[
             "src/Code/CampCleanup.cpp",
+            "src/Code/Assignment.cpp",
             "src/Code/CampCleanupTest.cpp",
         ],
         target="campCleanupTest",

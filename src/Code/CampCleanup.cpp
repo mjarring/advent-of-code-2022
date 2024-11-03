@@ -4,35 +4,6 @@
 #include <string>
 #include <vector>
 
-class Assignment {
-public:
-  Assignment(const int aStart, const int aEnd) : mStart(aStart), mEnd(aEnd) {}
-  int getStart() const { return mStart; }
-  int getEnd() const { return mEnd; }
-  //! Determine if this assignment fully contains aOther
-  bool contains(const Assignment &aOther) {
-    return mStart <= aOther.getStart() && mEnd >= aOther.getEnd();
-  }
-
-private:
-  int mStart;
-  int mEnd;
-};
-
-class AssignmentPair {
-public:
-  AssignmentPair(const Assignment &aFirst, const Assignment &aSecond)
-      : mFirst(aFirst), mSecond(aSecond) {}
-  //! @returns true if either assignment fully contains the other
-  bool isContained() {
-    return mFirst.contains(mSecond) || mSecond.contains(mFirst);
-  }
-
-private:
-  Assignment mFirst;
-  Assignment mSecond;
-};
-
 static Assignment readAssignment(const std::string &aString) {
   size_t delimiterPos = aString.find_first_of('-');
   int start = std::stoi(aString.substr(0, delimiterPos));
@@ -61,16 +32,24 @@ readAssignmentPairs(const std::string &aFilePath) {
 }
 
 CampCleanup::CampCleanup(const std::string &aFilePath)
-    : mInputFilePath(aFilePath) {}
+    : mAssignmentPairs(readAssignmentPairs(aFilePath)) {}
 
 int CampCleanup::getContainedAssignments() {
-  std::vector<AssignmentPair> assignmentPairs =
-      readAssignmentPairs(mInputFilePath);
   int contained = 0;
-  for (auto pair : assignmentPairs) {
+  for (auto pair : mAssignmentPairs) {
     if (pair.isContained()) {
       contained++;
     }
   }
   return contained;
+}
+
+int CampCleanup::getOverlappingRanges() {
+  int overlap = 0;
+  for (auto pair : mAssignmentPairs) {
+    if (pair.isOverlap()) {
+      overlap++;
+    }
+  }
+  return overlap;
 }
