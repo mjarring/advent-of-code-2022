@@ -2,7 +2,7 @@
 
 top = "."
 out = "build"
-CXXFLAGS = ["-Wall", "-Werror", "-std=c++17", "-g", "-O0"]
+CXXFLAGS = ["-Wall", "-Werror", "-std=c++17", "-g", "-O0", "-ferror-limit=0"]
 
 
 def options(opt):
@@ -11,7 +11,7 @@ def options(opt):
 
 def configure(conf):
     conf.load(["clangxx", "clang_compilation_database"])
-    conf.check(features="cxx cxxprogram", msg="Check for c++ features")
+    conf.check(features="cxx", msg="Check for c++ features")
     conf.env.CXXFLAGS = CXXFLAGS
 
 
@@ -22,28 +22,16 @@ def build(bld):
         target="doctest",
     )
     bld.program(
-        features="cxx cxxprogram",
+        features="cxx",
         source=[
             "src/Code/DayOne.cpp",
-            "src/Code/CalorieParser.cpp",
         ],
         target="calorieParser",
-        includes=["src/Include/"],
+        includes=["doctest/doctest/"],
         cxxflags=CXXFLAGS,
     )
     bld.program(
-        features="cxx cxxprogram",
-        source=[
-            "src/Code/CalorieParser.cpp",
-            "src/Code/CalorieParserTest.cpp",
-        ],
-        target="calorieTest",
-        includes=["src/Include/", "doctest/doctest/"],
-        cxxflags=CXXFLAGS,
-        use=["doctest"],
-    )
-    bld.program(
-        features="cxx cxxprogram",
+        features="cxx",
         source=[
             "src/Code/DayTwo.cpp",
             "src/Code/RockPaperScissors.cpp",
@@ -53,7 +41,7 @@ def build(bld):
         cxxflags=CXXFLAGS,
     )
     bld.program(
-        features="cxx cxxprogram",
+        features="cxx",
         source=[
             "src/Code/RockPaperScissors.cpp",
             "src/Code/RockPaperScissorsTest.cpp",
@@ -64,7 +52,7 @@ def build(bld):
         use=["doctest"],
     )
     bld.program(
-        features="cxx cxxprogram",
+        features="cxx",
         source=[
             "src/Code/DayThree.cpp",
             "src/Code/RucksackReorganizer.cpp",
@@ -74,7 +62,7 @@ def build(bld):
         cxxflags=CXXFLAGS,
     )
     bld.program(
-        features="cxx cxxprogram",
+        features="cxx",
         source=[
             "src/Code/RucksackReorganizer.cpp",
             "src/Code/RucksackReorganizerTest.cpp",
@@ -85,7 +73,7 @@ def build(bld):
         use=["doctest"],
     )
     bld.program(
-        features="cxx cxxprogram",
+        features="cxx",
         source=[
             "src/Code/DayFour.cpp",
             "src/Code/CampCleanup.cpp",
@@ -96,7 +84,7 @@ def build(bld):
         cxxflags=CXXFLAGS,
     )
     bld.program(
-        features="cxx cxxprogram",
+        features="cxx",
         source=[
             "src/Code/CampCleanup.cpp",
             "src/Code/Assignment.cpp",
