@@ -24,7 +24,7 @@ def build(bld):
     bld.program(
         features="cxx",
         source=[
-            "src/Code/DayOne.cpp",
+            "src/code/DayOne.cpp",
         ],
         target="calorieParser",
         includes=["doctest/doctest/"],
@@ -33,7 +33,7 @@ def build(bld):
     bld.program(
         features="cxx",
         source=[
-            "src/Code/DayTwo.cpp",
+            "src/code/DayTwo.cpp",
         ],
         target="rockPaperScissors",
         includes=["doctest/doctest/"],
@@ -42,7 +42,7 @@ def build(bld):
     bld.program(
         features="cxx",
         source=[
-            "src/Code/DayThree.cpp",
+            "src/code/DayThree.cpp",
         ],
         target="rucksack",
         includes=["doctest/doctest/"],
@@ -51,7 +51,7 @@ def build(bld):
     bld.program(
         features="cxx",
         source=[
-            "src/Code/DayFour.cpp",
+            "src/code/DayFour.cpp",
         ],
         target="campCleanup",
         includes=["doctest/doctest/"],
