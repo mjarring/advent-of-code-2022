@@ -34,22 +34,10 @@ def build(bld):
         features="cxx",
         source=[
             "src/Code/DayTwo.cpp",
-            "src/Code/RockPaperScissors.cpp",
         ],
         target="rockPaperScissors",
-        includes=["src/Include/"],
+        includes=["doctest/doctest/"],
         cxxflags=CXXFLAGS,
-    )
-    bld.program(
-        features="cxx",
-        source=[
-            "src/Code/RockPaperScissors.cpp",
-            "src/Code/RockPaperScissorsTest.cpp",
-        ],
-        target="rockPaperScissorsTest",
-        includes=["src/Include/", "doctest/doctest/"],
-        cxxflags=CXXFLAGS,
-        use=["doctest"],
     )
     bld.program(
         features="cxx",
