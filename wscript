@@ -43,22 +43,10 @@ def build(bld):
         features="cxx",
         source=[
             "src/Code/DayThree.cpp",
-            "src/Code/RucksackReorganizer.cpp",
         ],
         target="rucksack",
-        includes=["src/Include/"],
+        includes=["doctest/doctest/"],
         cxxflags=CXXFLAGS,
-    )
-    bld.program(
-        features="cxx",
-        source=[
-            "src/Code/RucksackReorganizer.cpp",
-            "src/Code/RucksackReorganizerTest.cpp",
-        ],
-        target="rucksackTest",
-        includes=["src/Include/", "doctest/doctest/"],
-        cxxflags=CXXFLAGS,
-        use=["doctest"],
     )
     bld.program(
         features="cxx",
