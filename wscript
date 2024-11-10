@@ -16,11 +16,6 @@ def configure(conf):
 
 
 def build(bld):
-    bld.stlib(
-        source="./doctest/doctest/parts/doctest.cpp",
-        features="cxx",
-        target="doctest",
-    )
     bld.program(
         features="cxx",
         source=[
