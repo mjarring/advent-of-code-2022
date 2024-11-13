@@ -52,3 +52,12 @@ def build(bld):
         includes=["doctest/doctest/"],
         cxxflags=CXXFLAGS,
     )
+    bld.program(
+        features="cxx",
+        source=[
+            "src/Code/DayFive.cpp",
+        ],
+        target="dayFive",
+        includes=["doctest/doctest/"],
+        cxxflags=CXXFLAGS,
+    )
