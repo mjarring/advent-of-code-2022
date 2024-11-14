@@ -86,34 +86,45 @@ readMoveOperation(const std::string &aLine) {
   return std::make_tuple(quantity, source, destination);
 }
 
-class SupplyStack {
-public:
-  SupplyStack(const std::string &aFilePath)
-      : mFilePath(aFilePath), mNumStacks(readNumStacks(aFilePath)),
-        mStacks(readStacks(aFilePath, mNumStacks)) {}
-
-  void rearrangeCrates();
-  std::string getTopMessage();
-
-private:
-  void performOperation(const MoveQuantity aQuantity, const MoveSource aSource,
-                        const MoveDestination aDestination);
-
-  std::string mFilePath;
-  size_t mNumStacks;
-  std::vector<std::deque<char>> mStacks;
-};
-
-std::string SupplyStack::getTopMessage() {
+static std::string getTopMessage(const std::vector<std::deque<char>> &aStacks) {
   std::string message;
-  for (const auto &stack : mStacks) {
+  for (const auto &stack : aStacks) {
     message += stack.front();
   }
   return message;
 }
 
-void SupplyStack::rearrangeCrates() {
-  std::ifstream inputFile = openFile(mFilePath);
+static void performOperation(std::vector<std::deque<char>> &aStacks,
+                             const MoveQuantity aQuantity,
+                             const MoveSource aSource,
+                             const MoveDestination aDestination,
+                             const bool aCrateMover9000) {
+  const size_t sourceIndex = aSource - 1;
+  assert(sourceIndex >= 0);
+  const size_t destinationIndex = aDestination - 1;
+  assert(destinationIndex >= 0);
+  if (aCrateMover9000) {
+    for (size_t i = 0; i < aQuantity; ++i) {
+      aStacks[destinationIndex].emplace_front(aStacks[sourceIndex].front());
+      aStacks[sourceIndex].pop_front();
+    }
+  } else {
+    std::deque<char> craneStack;
+    for (size_t i = 0; i < aQuantity; ++i) {
+      craneStack.emplace_back(aStacks[sourceIndex].front());
+      aStacks[sourceIndex].pop_front();
+    }
+    for (size_t i = 0; i < aQuantity; ++i) {
+      aStacks[destinationIndex].emplace_front(craneStack.back());
+      craneStack.pop_back();
+    }
+  }
+}
+
+static void rearrangeCrates(const std::string &aFilePath,
+                            std::vector<std::deque<char>> &aStacks,
+                            const bool aCrateMover9000) {
+  std::ifstream inputFile = openFile(aFilePath);
   std::string line;
   while (std::getline(inputFile, line)) {
     if (line.find("move") == std::string::npos) {
@@ -128,27 +139,24 @@ void SupplyStack::rearrangeCrates() {
     MoveSource source;
     MoveDestination destination;
     std::tie(quantity, source, destination) = readMoveOperation(line);
-    performOperation(quantity, source, destination);
-  }
-}
-
-void SupplyStack::performOperation(const MoveQuantity aQuantity,
-                                   const MoveSource aSource,
-                                   const MoveDestination aDestination) {
-  const size_t sourceIndex = aSource - 1;
-  assert(sourceIndex >= 0);
-  const size_t destinationIndex = aDestination - 1;
-  assert(destinationIndex >= 0);
-  for (size_t i = 0; i < aQuantity; ++i) {
-    mStacks[destinationIndex].emplace_front(mStacks[sourceIndex].front());
-    mStacks[sourceIndex].pop_front();
+    performOperation(aStacks, quantity, source, destination, aCrateMover9000);
   }
 }
 
 TEST_CASE("Test Top Message") {
-  SupplyStack supplyStack("input/day/5/test.txt");
-  supplyStack.rearrangeCrates();
-  CHECK("CMZ" == supplyStack.getTopMessage());
+  const std::string filePath = "input/day/5/test.txt";
+  size_t numStacks = readNumStacks(filePath);
+  std::vector<std::deque<char>> stacks = readStacks(filePath, numStacks);
+  rearrangeCrates(filePath, stacks, true);
+  CHECK("CMZ" == getTopMessage(stacks));
+}
+
+TEST_CASE("Test Top Message 2") {
+  const std::string filePath = "input/day/5/test.txt";
+  size_t numStacks = readNumStacks(filePath);
+  std::vector<std::deque<char>> stacks = readStacks(filePath, numStacks);
+  rearrangeCrates(filePath, stacks, false);
+  CHECK("MCD" == getTopMessage(stacks));
 }
 
 int main() {
@@ -159,9 +167,13 @@ int main() {
   }
 
   const std::string filePath = "input/day/5/input.txt";
-  SupplyStack supplyStack(filePath);
-  supplyStack.rearrangeCrates();
-  std::cout << "Message: " << supplyStack.getTopMessage() << std::endl;
+  size_t numStacks = readNumStacks(filePath);
+  std::vector<std::deque<char>> stacks = readStacks(filePath, numStacks);
+  rearrangeCrates(filePath, stacks, true);
+  std::cout << "Crate Mover 9000: " << getTopMessage(stacks) << std::endl;
 
+  std::vector<std::deque<char>> secondStacks = readStacks(filePath, numStacks);
+  rearrangeCrates(filePath, secondStacks, false);
+  std::cout << "Crate Mover 9001: " << getTopMessage(secondStacks) << std::endl;
   return res;
 }
