@@ -15,7 +15,7 @@ pub fn build(b: *std.Build) void {
         .target = b.host,
     });
     calorie.addCSourceFile(.{
-        .file = b.path("src/code/DayOne.cpp"),
+        .file = b.path("src/dayone.cpp"),
         .flags = &flags,
     });
     calorie.addIncludePath(doctest);
@@ -30,7 +30,7 @@ pub fn build(b: *std.Build) void {
         .target = b.host,
     });
     rps.addCSourceFile(.{
-        .file = b.path("src/Code/DayTwo.cpp"),
+        .file = b.path("src/daytwo.cpp"),
         .flags = &flags,
     });
     rps.addIncludePath(doctest);
@@ -45,7 +45,7 @@ pub fn build(b: *std.Build) void {
         .target = b.host,
     });
     rucksack.addCSourceFile(.{
-        .file = b.path("src/Code/DayThree.cpp"),
+        .file = b.path("src/daythree.cpp"),
         .flags = &flags,
     });
     rucksack.addIncludePath(doctest);
@@ -60,7 +60,7 @@ pub fn build(b: *std.Build) void {
         .target = b.host,
     });
     camp.addCSourceFile(.{
-        .file = b.path("src/Code/DayFour.cpp"),
+        .file = b.path("src/dayfour.cpp"),
         .flags = &flags,
     });
     camp.addIncludePath(doctest);
@@ -75,7 +75,7 @@ pub fn build(b: *std.Build) void {
         .target = b.host,
     });
     day_five.addCSourceFile(.{
-        .file = b.path("src/Code/DayFive.cpp"),
+        .file = b.path("src/dayfive.cpp"),
         .flags = &flags,
     });
     day_five.addIncludePath(doctest);
