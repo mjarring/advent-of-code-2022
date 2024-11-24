@@ -14,25 +14,17 @@
 #define DOCTEST_CONFIG_IMPLEMENT
 #include "doctest.h"
 
-class CalorieParser {
-public:
-  CalorieParser(const std::string &aInput);
-  int mostCalories();
-  int topThreeTotal();
-
-private:
-  std::set<int, std::greater<int>> mElfCalories;
-};
-
-CalorieParser::CalorieParser(const std::string &aInput) {
+std::set<int, std::greater<int>> readCalories(const std::string &aFilePath) {
+  std::ifstream inputFile(aFilePath);
+  assert(inputFile.is_open());
+  std::set<int, std::greater<int>> elfCalories;
   int currentCalories = 0;
-  std::stringstream stream(aInput);
   std::string line;
-  while (std::getline(stream, line) || currentCalories > 0) {
+  while (std::getline(inputFile, line) || currentCalories > 0) {
     if (line.empty()) {
       // We have reached the end of this elf's calorie count
       // Store the caloreis for this elf in the set
-      mElfCalories.insert(currentCalories);
+      elfCalories.insert(currentCalories);
       // Reset the calorie count for the current elf
       currentCalories = 0;
     } else {
@@ -42,16 +34,17 @@ CalorieParser::CalorieParser(const std::string &aInput) {
       currentCalories += number;
     }
   }
+  return elfCalories;
 }
 
-int CalorieParser::mostCalories() {
-  std::set<int>::iterator itr = mElfCalories.begin();
+int mostCalories(const std::set<int, std::greater<int>> &aElfCalories) {
+  std::set<int>::iterator itr = aElfCalories.begin();
   int most = *itr;
   return most;
 }
 
-int CalorieParser::topThreeTotal() {
-  std::set<int>::iterator itr = mElfCalories.begin();
+int topThreeTotal(const std::set<int, std::greater<int>> &aElfCalories) {
+  std::set<int>::iterator itr = aElfCalories.begin();
   int most = *itr;
   itr++;
   int secondMost = *itr;
@@ -59,15 +52,6 @@ int CalorieParser::topThreeTotal() {
   int thirdMost = *itr;
   int topThreeTotal = most + secondMost + thirdMost;
   return topThreeTotal;
-}
-
-std::string openTestFile(const std::string &aPath) {
-  std::ifstream inputFile(aPath);
-  assert(inputFile.is_open());
-
-  std::stringstream buffer;
-  buffer << inputFile.rdbuf();
-  return buffer.str();
 }
 
 class RockPaperScissors {
@@ -520,16 +504,12 @@ static void rearrangeCrates(const std::string &aFilePath,
 
 TEST_CASE("Testing mostCalories") {
   const std::string testFilePath = "input/day/1/test";
-  const std::string input = openTestFile(testFilePath);
-  CalorieParser calorieParser(input);
-  CHECK(calorieParser.mostCalories() == 24000);
+  CHECK(mostCalories(readCalories(testFilePath)) == 24000);
 }
 
 TEST_CASE("Test topThreeTotal") {
   const std::string testFilePath = "input/day/1/test";
-  const std::string input = openTestFile(testFilePath);
-  CalorieParser calorieParser(input);
-  CHECK(calorieParser.topThreeTotal() == 45000);
+  CHECK(topThreeTotal(readCalories(testFilePath)) == 45000);
 }
 
 TEST_CASE("Test Total Score") {
@@ -587,15 +567,10 @@ int main() {
   }
 
   std::string filePath = "input/day/1/input";
-  std::ifstream inputFile(filePath);
-  assert(inputFile.is_open());
-
-  std::stringstream buffer;
-  buffer << inputFile.rdbuf();
-  CalorieParser calorieParser(buffer.str());
+  auto elfCalories = readCalories(filePath);
   std::cout << "The elf with the most calories has "
-            << calorieParser.mostCalories() << " calories" << std::endl;
-  std::cout << "The top three elves total " << calorieParser.topThreeTotal()
+            << mostCalories(elfCalories) << " calories" << std::endl;
+  std::cout << "The top three elves total " << topThreeTotal(elfCalories)
             << " calories" << std::endl;
 
   filePath = "input/day/2/input.txt";
