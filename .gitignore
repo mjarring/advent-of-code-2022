@@ -41,3 +41,5 @@
 # Ignore .DS_Store file for Mac
 .DS_Store
 
+# Ignore clangd file
+.clangd
